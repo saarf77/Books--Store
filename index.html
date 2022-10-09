@@ -13,17 +13,17 @@
     <h1>The Last Chapter</h1>
     <section class="book-filter">
         <h2>Filter</h2>
-        <!-- <select class="filter-title-select" onchange="onSetFilterBy({title: this.value})"> -->
-            <input class="filter-title-select"  type="text" oninput="onSetFilterBy({title: this.value})" placeholder="Search a book" />
+        <input class="filter-title-select" type="text" oninput="onSetFilterBy({title: this.value})"
+            placeholder="Search a book" />
         </select>
         <label>
             Min Price:
-            <input type="range" min= 0 max= 999 value=0 class="filter-price-range"
+            <input type="range" min=0 max=999 value=0 class="filter-price-range"
                 onchange="this.title=this.value;onSetFilterBy({price: this.value})" />
         </label>
         <label>
             Min Rate:
-            <input type="range" min= 0 max= 10 value=0 class="filter-rating-range"
+            <input type="range" min=0 max=10 value=0 class="filter-rating-range"
                 onchange="this.title=this.value;onSetFilterBy({rating: this.value})" />
         </label>
         <hr />
@@ -71,6 +71,13 @@
         </table>
     </div>
     <div class="user-msg"></div>
+
+    <footer>
+        <li><a href="https://www.linkedin.com/in/saar-fridman/" target="_blank">Linkendin</a></li>
+        <li><a href="mailto:saarf77@gmail.com" target="_blank">saarf77@gmail.com</a></li>
+        <li><a href="https://github.com/saarf77" target="_blank">GitHub</a></li>
+    </footer>
+
     <script src="js/services/util-service.js"></script>
     <script src="js/services/storage-service.js"></script>
     <script src="js/services/book-service.js"></script>
@@ -78,6 +85,3 @@
 </body>
 
 </html>
-
-
-

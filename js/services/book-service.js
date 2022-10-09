@@ -1,12 +1,11 @@
 'use strict'
 const STORAGE_KEY = 'bookDB'
-const gTitels = ['Harry Potter', 'Lord Of The Rings', 'Game Of Thrones', 'The Men In The High Castle', 'Mein Kampf']
+const gTitels = ['Harry Potter', 'Lord Of The Rings', 'Game Of Thrones', 'The Men In The High Castle', 'The Intelligent Investor', 'My Sister\'s Keeper']
 const PAGE_SIZE = 5
 
 var gPageIdx = 0
 var gBooks
 var gFilterBy = { title: '', price: 0, rating: 0}
-
 
 function getTitels() {
     return gTitels
@@ -83,7 +82,7 @@ function _createBooks() {
     // Nothing in storage - generate demo data
     if (!books || !books.length) {
         books = []
-        for (let i = 0; i < 13; i++) {
+        for (let i = 0; i < 18; i++) {
             var title = gTitels[getRandomIntInclusive(0, gTitels.length - 1)]
             var price = getRandomIntInclusive(1, 1000)
             books.push(_createBook(title, price))
@@ -93,14 +92,12 @@ function _createBooks() {
     _saveBooksToStorage()
 }
 
-
 function setBookFilter(filterBy = {}) {
     if (filterBy.title !== undefined) gFilterBy.title = filterBy.title
     if (filterBy.price !== undefined) gFilterBy.price = filterBy.price
     if (filterBy.rating !== undefined) gFilterBy.rating = filterBy.rating
     return gFilterBy
 }
-
 
 function setBookSort(sortBy = {}) {
     if (sortBy.price !== undefined) {
