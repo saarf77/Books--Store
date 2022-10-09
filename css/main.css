@@ -1,0 +1,106 @@
+body {
+    background-color: darkslateblue;
+    color: whitesmoke;
+    overflow-x: hidden;
+    padding: 0 40px;
+    
+}
+button {
+    background-color: #222;
+    color: whitesmoke;
+    border:0;
+    border-radius: .2em;
+    padding: 6px 10px;
+    margin: 2px;
+    cursor: pointer;    
+}
+button:hover {
+    color: deeppink;
+}
+
+.books-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.book-preview {
+    background-color: white;
+    color: darkviolet;
+    width: 20%;
+    margin:.5em;
+    border: 1px solid lightgray;
+    border-radius: .2em;
+    text-align: center;
+    padding: 5px;
+}
+.book-preview .btn-remove {
+    float:right;
+}
+
+.book-preview img {
+    max-width: 100%;
+}
+
+.book-preview h5 {
+    font-size: 1.4em;
+    text-transform: capitalize;
+    text-decoration: overline;
+}
+
+.book-preview h6 span{
+    color: tomato;
+    font-size: 2em;
+}
+
+.book-filter {
+    background-color: indigo;
+    padding: 10px;
+    margin: 20px;
+}
+.filter-vendor-select {
+    text-transform: capitalize;
+}
+.book-filter hr {
+    margin: 30px;
+}
+
+
+.modal {
+    background-color: #111;
+    padding: 10px;
+    position: absolute;
+    top: 0px;
+    left: 150%;
+    height: 80vh;
+    min-width: 300px;
+    text-align: center;
+}
+.modal.open {
+    left: 50%;
+    transition: left .5s;
+}
+.modal h3{
+    color:pink;
+    text-decoration: overline;
+    text-transform: capitalize;
+}
+.modal h4 span{
+    color:pink;
+}
+.modal > p {
+    text-align: left;
+}
+
+
+.user-msg {
+    position: fixed;
+    bottom: -100px;
+    right:10px;
+    background-color: #111;
+    padding: 10px;
+}
+.user-msg.open {
+    bottom: 10px;
+    transition: bottom .5s;
+}
+
