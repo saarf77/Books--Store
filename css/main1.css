@@ -160,6 +160,26 @@ h5{
     margin-bottom: 5px;
 }
 
+footer{
+    margin: 10%;
+    justify-content: space-between;
+    flex-direction: row;
+    display: flex;
+    background-color: #06d6a0ff;
+    width: 85vh;
+    padding: 10px;
+    text-align: center;
+    list-style-type: none;
+}
+footer a{
+    text-decoration: none;
+    color: #111;
+    
+}
+
+footer,a:hover{
+    color: #118ab2ff;
+}
 @media screen and (max-width: 400px) {
     h1{
         font-size: 3rem;
@@ -180,29 +200,35 @@ h5{
         font-weight: 600;
         margin-bottom: 0.2em;
     }
+    .modal.open {
+        left: 0;
+        transition: left .5s;
+        color: aliceblue;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding-right: 40px;
+        height: 90vh;
+    }
+    footer{
+        margin: 10%;
+        /* justify-content: space-between; */
+        flex-direction: column;
+        display: flex;
+        background-color: #06d6a0ff;
+        width: 50vh;
+        padding: 10px;
+        text-align: center;
+        list-style-type: none;
+    }
+    footer a{
+        background-color: black;
+        color: #fff;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin: 5px
+    }
 }
-
-
-
-/* footer */
-
-  footer{
-    margin: 10%;
-    justify-content: space-between;
-    flex-direction: row;
-    display: flex;
-    background-color: #06d6a0ff;
-    width: 85vh;
-    padding: 10px;
-    text-align: center;
-    list-style-type: none;
-  }
-  footer a{
-    text-decoration: none;
-    color: #111;
-
-  }
-
-  a:hover{
-    color: #118ab2ff;
-  }
