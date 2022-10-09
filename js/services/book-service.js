@@ -5,7 +5,7 @@ const PAGE_SIZE = 5
 
 var gPageIdx = 0
 var gBooks
-var gFilterBy = { title: '', price: 0 }
+var gFilterBy = { title: '', price: 0, rating: 0}
 
 
 function getTitels() {
@@ -17,8 +17,8 @@ _createBooks()
 function getBooks() {
 
     // Filtering:
-    var books = gBooks.filter(book => book.title.includes(gFilterBy.title) &&
-        book.price >= gFilterBy.price)
+    var books = gBooks.filter(book => book.title.toLowerCase().includes(gFilterBy.title.toLowerCase()) &&
+        book.price >= gFilterBy.price && book.rating >= gFilterBy.rating)
 
     // Paging:
     const startIdx = gPageIdx * PAGE_SIZE
@@ -97,6 +97,7 @@ function _createBooks() {
 function setBookFilter(filterBy = {}) {
     if (filterBy.title !== undefined) gFilterBy.title = filterBy.title
     if (filterBy.price !== undefined) gFilterBy.price = filterBy.price
+    if (filterBy.rating !== undefined) gFilterBy.rating = filterBy.rating
     return gFilterBy
 }
 
@@ -112,3 +113,5 @@ function setBookSort(sortBy = {}) {
 function _saveBooksToStorage() {
     saveToStorage(STORAGE_KEY, gBooks)
 }
+
+

@@ -116,7 +116,7 @@ function onSetFilterBy(filterBy) {
     filterBy = setBookFilter(filterBy)
     renderBooks()
 
-    const queryStringParams = `?title=${filterBy.title}&price=${filterBy.price}`
+    const queryStringParams = `?title=${filterBy.title}&price=${filterBy.price}&rating=${filterBy.rating}`
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
     window.history.pushState({ path: newUrl }, '', newUrl)
 
@@ -140,13 +140,15 @@ function renderFilterByQueryStringParams() {
     const queryStringParams = new URLSearchParams(window.location.search)
     const filterBy = {
         title: queryStringParams.get('title') || '',
-        price: +queryStringParams.get('price') || 0
+        price: +queryStringParams.get('price') || 0,
+        rating : +queryStringParams.get('rating') || 0
     }
 
-    if (!filterBy.title && !filterBy.price) return
+    if (!filterBy.title && !filterBy.price && !filterBy.rating) return
 
     document.querySelector('.filter-title-select').value = filterBy.title
     document.querySelector('.filter-price-range').value = filterBy.price
+    document.querySelector('.filter-rating-range').value = filterBy.rating
     setBookFilter(filterBy)
 }
 

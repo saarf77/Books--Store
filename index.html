@@ -13,12 +13,18 @@
     <h1>The Last Chapter</h1>
     <section class="book-filter">
         <h2>Filter</h2>
-        <select class="filter-title-select" onchange="onSetFilterBy({title: this.value})">
+        <!-- <select class="filter-title-select" onchange="onSetFilterBy({title: this.value})"> -->
+            <input class="filter-title-select"  type="text" oninput="onSetFilterBy({title: this.value})" placeholder="Search a book" />
         </select>
         <label>
             Min Price:
             <input type="range" min= 0 max= 999 value=0 class="filter-price-range"
                 onchange="this.title=this.value;onSetFilterBy({price: this.value})" />
+        </label>
+        <label>
+            Min Rate:
+            <input type="range" min= 0 max= 10 value=0 class="filter-rating-range"
+                onchange="this.title=this.value;onSetFilterBy({rating: this.value})" />
         </label>
         <hr />
         <div>
