@@ -148,6 +148,8 @@ button:hover {
 .table {
     background-color: whitesmoke;
     font-size: 1.3em;
+    max-width:max-content;
+
 }
 
 th {
@@ -183,7 +185,8 @@ a:hover {
     color: #118ab2ff;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 600px) {
+
     h1 {
         font-size: 3rem;
     }
@@ -194,7 +197,7 @@ a:hover {
 
     .table {
         font-size: 0.8em;
-        width: 80vh;
+        max-width:max-content;
     }
 
     button {
@@ -209,15 +212,13 @@ a:hover {
 
     .modal.open {
         left: 0;
-        transition: left .5s;
         color: aliceblue;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        padding-right: 40px;
-        height: 90vh;
+        height: 100vh;
     }
 
     footer {
