@@ -105,16 +105,16 @@ button:hover {
     padding: 10px;
     position: absolute;
     top: 0px;
-    left: 150%;
     height: 80vh;
     min-width: 300px;
     text-align: center;
+    display: none;
 }
 
 .modal.open {
-    left: 50%;
-    transition: left .5s;
     color: aliceblue;
+    display: block;
+    transition: ease-in;
 }
 
 .modal h3 {
@@ -156,41 +156,47 @@ th {
     letter-spacing: 0.05em;
 }
 
-h5{
+h5 {
     margin-bottom: 5px;
 }
 
-footer{
+footer {
     margin: 10%;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-direction: row;
     display: flex;
     background-color: #06d6a0ff;
     width: 85vh;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
     list-style-type: none;
 }
-footer a{
+
+footer a {
     text-decoration: none;
     color: #111;
-    
+
 }
 
-footer,a:hover{
+footer,
+a:hover {
     color: #118ab2ff;
 }
+
 @media screen and (max-width: 400px) {
-    h1{
+    h1 {
         font-size: 3rem;
     }
+
     a {
         position: relative;
     }
 
     .table {
         font-size: 0.8em;
+        width: 80vh;
     }
+
     button {
         background-color: #222;
         color: whitesmoke;
@@ -200,6 +206,7 @@ footer,a:hover{
         font-weight: 600;
         margin-bottom: 0.2em;
     }
+
     .modal.open {
         left: 0;
         transition: left .5s;
@@ -212,9 +219,9 @@ footer,a:hover{
         padding-right: 40px;
         height: 90vh;
     }
-    footer{
+
+    footer {
         margin: 10%;
-        /* justify-content: space-between; */
         flex-direction: column;
         display: flex;
         background-color: #06d6a0ff;
@@ -223,7 +230,8 @@ footer,a:hover{
         text-align: center;
         list-style-type: none;
     }
-    footer a{
+
+    footer a {
         background-color: black;
         color: #fff;
         align-items: center;
