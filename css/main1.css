@@ -12,7 +12,7 @@ body {
     animation: bg-animation 25s infinite;
 }
 
-h1 {
+.header,h1 {
     margin-bottom: 1rem;
     border-radius: 6px;
     font-family: Lato, sans-serif;
@@ -26,7 +26,7 @@ h1 {
     text-transform: uppercase;
 }
 
-button {
+/* button {
     background-color: #222;
     color: whitesmoke;
     margin: 2px;
@@ -41,7 +41,7 @@ button {
     cursor: pointer;
     transition: 0.5s;
     margin-bottom: 0.5em;
-}
+} */
 
 .btn {
     display: flex;
@@ -115,6 +115,23 @@ button:hover {
     color: aliceblue;
     display: block;
     transition: ease-in;
+}
+
+.modalAddBook{
+    background-color: #118ab2ff;
+    padding: 10px;
+    position: absolute;
+    top: 0px;
+    height: 80vh;
+    min-width: 300px;
+    text-align: center;
+    display: none;  
+}
+
+.modalAddBook.open{
+    color: aliceblue;
+    display: block;
+    transition: ease-in;  
 }
 
 .modal h3 {

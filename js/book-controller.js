@@ -4,6 +4,10 @@ function onInit() {
     renderFilterByQueryStringParams()
     renderBooks()
     renderTitelsInFilter()
+    var currUser = loadFromStorage('currUser')
+    if (currUser !== null) {
+        onReadBook(currUser)
+    }
 }
 
 function renderTitelsInFilter() {
@@ -43,9 +47,9 @@ function renderBooks() {
             }
             else {
                 strHTML += `<td class="cell" , event.preventDefault();">     
-                <button onclick="onReadBook('${books[i].id}')">Details</button>  
-                <button onclick="onUpdateBook('${books[i].id}')">Update</button>
-                <button class="btn-remove" onclick="onDeleteBook('${books[i].id}')">Delete</button>
+                <button type="button" type="button" class="btn btn-success" onclick="onReadBook('${books[i].id}')">Details</button>  
+                <button type="button" type="button" class="btn btn-danger" onclick="onUpdateBook('${books[i].id}')">Update</button>
+                <button type="button" type="button" class="btn btn-info" class="btn-remove" onclick="onDeleteBook('${books[i].id}')">Delete</button>
                 </td>`
 
             }
@@ -66,13 +70,9 @@ function onDeleteBook(bookId) {
 }
 
 function onAddBook() {
-    var title = prompt('book Title?', 'Harry Potter')
-    var price = prompt('book Price?', 19.9)
-    if (title && price) {
-        const book = addBook(title, price)
-        renderBooks()
-        flashMsg(`Book Added (id: ${book.id})`)
-    }
+    var elModal = document.querySelector('.modalAddBook')
+    elModal.classList.add('open')
+
 }
 
 function onUpdateBook(bookId) {
@@ -96,6 +96,7 @@ function onReadBook(bookId) {
     var strHTML = `<button onclick="onSubRating('${book.id}')">-</button><span>${book.rating}</span><button onclick="onAddRating('${book.id}')">+</button> `
     var elRating = document.querySelector(".rating")
     elRating.innerHTML = strHTML
+    saveToStorage('currUser', bookId)
 }
 
 function onSetFilterBy(filterBy) {
@@ -110,6 +111,7 @@ function onSetFilterBy(filterBy) {
 
 function onCloseModal() {
     document.querySelector('.modal').classList.remove('open')
+    saveToStorage('currUser', null)
 }
 
 function flashMsg(msg) {
@@ -181,5 +183,25 @@ function onAddRating(bookId) {
     onReadBook(bookId)
 }
 
+
+
+function onCloseAddModal() {
+    document.querySelector('.modalAddBook').classList.remove('open')
+}
+
+
+function onSubmitAddModal() {
+    var bookTitle = document.getElementById('titleInput').value
+    var bookPrice = document.getElementById('priceInput').value
+    if (!bookTitle || !bookPrice) {
+        document.querySelector('.modalAddBook').classList.remove('open')
+        alert('Book is not added, please fill all the information')
+    }
+    else {
+        const book = addBook(bookTitle, bookPrice)
+        renderBooks()
+        document.querySelector('.modalAddBook').classList.remove('open')
+    }
+}
 
 
