@@ -1,12 +1,25 @@
 'use strict'
-
+const star = "⭐"
+const READ_BOOK_ID = "currReadBook"
+const UPDATE_BOOK_ID = "currUpdateBook"
+const FAV_LAYOUT = "favLayout"
+var favState = {cards:"cards",table:"table"}
+var massageOptions = {add:`The book has been added`,delete:`The book has been deleted`,update:`The book has been updated`,badSubmit:`Some of the information is missing!!`}
 function onInit() {
+    var currLayout = loadFromStorage(FAV_LAYOUT)
+    if(currLayout !== null && currLayout === "cards")
+    {
+        document.getElementById("btnradio2").checked = true
+    }
+    document.getElementById("titleInput").value 
+    console.log("active init")
     renderFilterByQueryStringParams()
     renderBooks()
     renderTitelsInFilter()
-    var currUser = loadFromStorage('currUser')
-    if (currUser !== null) {
-        onReadBook(currUser)
+    var currBook = loadFromStorage(READ_BOOK_ID)
+    if(currBook !== null)
+    {
+        onReadBook(currBook)
     }
 }
 
@@ -22,81 +35,112 @@ function renderTitelsInFilter() {
 
 }
 
+
 function renderBooks() {
-    var books = getBooks()
-    var strHTML = ``
-    for (let i = 0; i < books.length; i++) {
-        strHTML += `<tr>`
-        for (let j = 0; j < 4; j++) {
-            var currCell
-            switch (j) {
-                case 0:
-                    currCell = books[i].id
-                    break;
-                case 1:
-                    currCell = books[i].title
-                    break;
-                case 2:
-                    currCell = books[i].price + '$'
-                    break;
-                default:
-                    break;
-            }
-            if (j < 3) {
-                strHTML += `<td class="cell" , event.preventDefault();">${currCell}</td>`
-            }
-            else {
-                strHTML += `<td class="cell" , event.preventDefault();">     
-                <button type="button" type="button" class="btn btn-success" onclick="onReadBook('${books[i].id}')">Details</button>  
-                <button type="button" type="button" class="btn btn-danger" onclick="onUpdateBook('${books[i].id}')">Update</button>
-                <button type="button" type="button" class="btn btn-info" class="btn-remove" onclick="onDeleteBook('${books[i].id}')">Delete</button>
-                </td>`
-
-            }
-
-
-        }
-        strHTML += `</tr>`
+    var currLayout = loadFromStorage(FAV_LAYOUT)
+  
+    if(currLayout !== null && currLayout === "cards")
+    {
+        renderBooksCards()
+        return
     }
-    var elBoard = document.querySelector(".board")
-    elBoard.innerHTML = strHTML
-
+    renderBooksTable()
 }
-
+function renderBooksCards()
+{
+    var books = getBooks()
+    var strHtmls = books.map(book => `
+        <article class="book-preview">
+            <h5>${book.title}</h5>
+            <h6>Price: <span>${book.price}</span>$</h6>
+            <button type="button" class="btn btn-primary" onclick="onReadBook('${book.id}')">Details</button>
+            <button type="button" class="btn btn-warning" onclick="onUpdateBook('${book.id}')">Update</button>
+            <button type="button" class="btn btn-danger" class="btn-remove" onclick="onDeleteBook('${book.id}')">Delete</button>
+        </article> 
+        `
+    )
+    document.querySelector('.booksContainer').innerHTML = strHtmls.join('')
+}
+function renderBooksTable()
+    {
+        var books = getBooks()
+        var strHTMLTable =`<table class="table" id="myTable" border="1" cellpadding="10">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        <tbody class="board"></tbody>
+        </table>`
+        var elBoard = document.querySelector(".booksContainer")
+        elBoard.innerHTML = strHTMLTable
+            var strHTML = ``
+            for (let i = 0; i < books.length; i++) {
+                strHTML += `<tr>`
+                for (let j = 0; j < 4; j++) {
+                    var currCell
+                    switch (j) {
+                        case 0:
+                            currCell = books[i].id
+                            break;
+                        case 1:
+                            currCell = books[i].title
+                            break;
+                        case 2:
+                            currCell = books[i].price + '$'
+                            break;
+                        default:
+                            break;
+                    }
+                   if(j<3)
+                   {
+                    strHTML += `<td class="cell" , event.preventDefault();">${currCell}</td>`
+                   }
+                  else{
+                   strHTML += `<td class="cell" , event.preventDefault();">     
+                    <button type="button" class="btn btn-primary" onclick="onReadBook('${books[i].id}')">Details</button>  
+                    <button type="button" class="btn btn-warning" onclick="onUpdateBook('${books[i].id}')">Update</button>
+                    <button type="button" class="btn btn-danger" class="btn-remove" onclick="onDeleteBook('${books[i].id}')">Delete</button>
+                    </td>`
+                  }
+                }
+                strHTML += `</tr>`
+            }
+            elBoard = document.querySelector(".board")
+            elBoard.innerHTML = strHTML
+    }
 function onDeleteBook(bookId) {
     removeBook(bookId)
+    flashMsg(massageOptions.delete)
     renderBooks()
-    flashMsg(`Book Deleted`)
 }
 
 function onAddBook() {
     var elModal = document.querySelector('.modalAddBook')
     elModal.classList.add('open')
-
 }
 
 function onUpdateBook(bookId) {
+    saveToStorage(UPDATE_BOOK_ID,bookId)
+    var elModal = document.querySelector('.modalUpdateBook')
+    elModal.classList.add('open')
     const book = getBookById(bookId)
-    var newPrice = +prompt('Price?', book.price)
-    var newTitle = prompt('Title?', book.title)
-    if ((newPrice && newTitle) && (book.price !== newPrice || book.title !== newTitle)) {
-        const book = updateBook(bookId, newTitle, newPrice, book.rating)
-        renderBooks()
-        flashMsg(`Title updated to: ${book.title} and price updated to: ${book.price}`)
-    }
+    document.getElementById("titleUpdateInput").value = book.title
+    document.getElementById("priceUpdateInput").value = book.price
 }
 
 function onReadBook(bookId) {
     var book = getBookById(bookId)
     var elModal = document.querySelector('.modal')
     elModal.querySelector('h3').innerText = book.title
-    elModal.querySelector('h4 span').innerText = ' ' + book.price
+    elModal.querySelector('h4 span').innerText = book.price
     elModal.querySelector('p').innerText = book.desc
     elModal.classList.add('open')
-    var strHTML = `<button onclick="onSubRating('${book.id}')">-</button><span>${book.rating}</span><button onclick="onAddRating('${book.id}')">+</button> `
+    var strHTML = `<button onclick="onSubRating('${book.id}')">-</button><span> ${book.rating} </span><button onclick="onAddRating('${book.id}')">+</button>`
     var elRating = document.querySelector(".rating")
     elRating.innerHTML = strHTML
-    saveToStorage('currUser', bookId)
+    saveToStorage(READ_BOOK_ID,bookId)
 }
 
 function onSetFilterBy(filterBy) {
@@ -109,9 +153,10 @@ function onSetFilterBy(filterBy) {
 
 }
 
+
 function onCloseModal() {
     document.querySelector('.modal').classList.remove('open')
-    saveToStorage('currUser', null)
+    saveToStorage(READ_BOOK_ID,null)
 }
 
 function flashMsg(msg) {
@@ -155,6 +200,7 @@ function onSetSortBy() {
     renderBooks()
 }
 
+
 function onNextPage() {
     nextPage()
     renderBooks()
@@ -167,41 +213,73 @@ function onPrevPage() {
 
 function onSubRating(bookId) {
     var book = getBookById(bookId)
-    if (book.rating == 0) {
+    if ( book.rating == 0) {
         return
     }
-    book = updateBook(bookId, book.title, book.price, book.rating - 1)
+
+    book = updateBook(bookId,book.title ,book.price,book.rating-1)
     onReadBook(bookId)
 }
 
 function onAddRating(bookId) {
     var book = getBookById(bookId)
-    if (book.rating == 10) {
+    if ( book.rating == 10) {
         return
     }
-    book = updateBook(bookId, book.title, book.price, book.rating + 1)
+    book = updateBook(bookId,book.title ,book.price,book.rating+1)
     onReadBook(bookId)
 }
-
-
-
-function onCloseAddModal() {
+function onCloseAddModal()
+{
+    document.getElementById("titleInput").value =''
+    document.getElementById("priceInput").value =''
     document.querySelector('.modalAddBook').classList.remove('open')
 }
-
-
-function onSubmitAddModal() {
-    var bookTitle = document.getElementById('titleInput').value
-    var bookPrice = document.getElementById('priceInput').value
+function onSubmitAddModal()
+{
+    var bookTitle = document.getElementById("titleInput").value 
+    var bookPrice = document.getElementById("priceInput").value 
     if (!bookTitle || !bookPrice) {
-        document.querySelector('.modalAddBook').classList.remove('open')
-        alert('Book is not added, please fill all the information')
+        flashMsg(massageOptions.badSubmit)
+        return
     }
-    else {
-        const book = addBook(bookTitle, bookPrice)
-        renderBooks()
-        document.querySelector('.modalAddBook').classList.remove('open')
-    }
+    document.getElementById("titleInput").value =''
+    document.getElementById("priceInput").value =''
+    addBook(bookTitle,bookPrice)  
+    document.querySelector('.modalAddBook').classList.remove('open')
+    flashMsg(massageOptions.add)
+    renderBooks()
 }
+function onCloseUpdateModal()
+{
+    document.querySelector('.modalUpdateBook').classList.remove('open')
+}
+function onSubmitUpdateModal()
+{
+    var currBook = loadFromStorage(UPDATE_BOOK_ID)
+    const book = getBookById(currBook)
+    var newTitle = document.getElementById("titleUpdateInput").value 
+    var newPrice = document.getElementById("priceUpdateInput").value 
+    if( !newPrice || !newTitle ) 
+    {
+        flashMsg(massageOptions.badSubmit)
+        return
+    }
+    if (book.price !== newPrice || book.title !== newTitle ){
+        updateBook(book.id,newTitle ,newPrice,book.rating)
+        flashMsg(massageOptions.update)
+        renderBooks()
+    }
+    document.querySelector('.modalUpdateBook').classList.remove('open')
 
-
+}
+function onClickTable()
+{
+    saveToStorage(FAV_LAYOUT,favState.table)
+    renderBooks()
+}
+function onClickCards()
+{
+    saveToStorage(FAV_LAYOUT,favState.cards)
+    renderBooks()
+}

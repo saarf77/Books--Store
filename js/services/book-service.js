@@ -1,11 +1,12 @@
 'use strict'
 const STORAGE_KEY = 'bookDB'
-const gTitels = ['Harry Potter', 'Lord Of The Rings', 'Game Of Thrones', 'The Men In The High Castle', 'The Intelligent Investor', 'My Sister\'s Keeper']
+const gTitels = ['Harry Potter', 'Lord Of The Rings', 'Game Of Thrones', 'The Men In The High Castle', 'Not Without My Daugther']
 const PAGE_SIZE = 5
 
 var gPageIdx = 0
 var gBooks
-var gFilterBy = { title: '', price: 0, rating: 0}
+var gFilterBy = { title: '', price: 0 ,rating: 0}
+
 
 function getTitels() {
     return gTitels
@@ -14,7 +15,7 @@ function getTitels() {
 _createBooks()
 
 function getBooks() {
-
+    
     // Filtering:
     var books = gBooks.filter(book => book.title.toLowerCase().includes(gFilterBy.title.toLowerCase()) &&
         book.price >= gFilterBy.price && book.rating >= gFilterBy.rating)
@@ -26,10 +27,12 @@ function getBooks() {
 }
 
 function nextPage() {
-    if ((gPageIdx + 1) * PAGE_SIZE >= gBooks.length) {
+    
+    if ((gPageIdx+1) * PAGE_SIZE >= gBooks.length) {
         return
     }
     gPageIdx++
+    document.getElementById("page-num").innerText = gPageIdx +1
 
 }
 
@@ -38,6 +41,9 @@ function prevPage() {
     if (gPageIdx * PAGE_SIZE <= 0) {
         gPageIdx = 0
     }
+
+    document.getElementById("page-num").innerText = gPageIdx +1
+
 }
 
 function removeBook(bookId) {
@@ -46,10 +52,11 @@ function removeBook(bookId) {
     _saveBooksToStorage()
 }
 
-function addBook(title, price) {
-    const book = _createBook(title, price)
+function addBook(title,price) {
+    const book = _createBook(title,price)
     gBooks.unshift(book)
     _saveBooksToStorage()
+    
     return book
 }
 
@@ -58,7 +65,7 @@ function getBookById(bookId) {
     return currBook
 }
 
-function updateBook(bookId, newTitle, newPrice, rating) {
+function updateBook(bookId,newTitle ,newPrice,rating) {
     const book = gBooks.find(book => book.id === bookId)
     book.price = newPrice
     book.title = newTitle
@@ -67,7 +74,7 @@ function updateBook(bookId, newTitle, newPrice, rating) {
     return book
 }
 
-function _createBook(title, price) {
+function _createBook(title,price) {
     return {
         id: makeId(),
         title: title,
@@ -82,15 +89,16 @@ function _createBooks() {
     // Nothing in storage - generate demo data
     if (!books || !books.length) {
         books = []
-        for (let i = 0; i < 18; i++) {
+        for (let i = 0; i < 13; i++) {
             var title = gTitels[getRandomIntInclusive(0, gTitels.length - 1)]
             var price = getRandomIntInclusive(1, 1000)
-            books.push(_createBook(title, price))
+            books.push(_createBook(title,price))
         }
     }
     gBooks = books
     _saveBooksToStorage()
 }
+
 
 function setBookFilter(filterBy = {}) {
     if (filterBy.title !== undefined) gFilterBy.title = filterBy.title
@@ -98,6 +106,7 @@ function setBookFilter(filterBy = {}) {
     if (filterBy.rating !== undefined) gFilterBy.rating = filterBy.rating
     return gFilterBy
 }
+
 
 function setBookSort(sortBy = {}) {
     if (sortBy.price !== undefined) {
@@ -110,5 +119,3 @@ function setBookSort(sortBy = {}) {
 function _saveBooksToStorage() {
     saveToStorage(STORAGE_KEY, gBooks)
 }
-
-

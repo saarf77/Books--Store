@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main1.css">
+    <title>The Last Chapter</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body onload="onInit()">
+    <h1 class="header">The Last Chapter</h1>
+    <section class="book-filter">
+        <h2>Filter</h2>
+        <input class="filter-title-select" type="text" oninput="onSetFilterBy({title: this.value})"
+            placeholder="Search a book" />
+        </select>
+        <label>
+            Min Price:
+            <input type="range" min=0 max=999 value=0 class="filter-price-range"
+                onchange="this.title=this.value;onSetFilterBy({price: this.value})" />
+        </label>
+        <label>
+            Min Rate:
+            <input type="range" min=0 max=10 value=0 class="filter-rating-range"
+                onchange="this.title=this.value;onSetFilterBy({rating: this.value})" />
+        </label>
+        <hr />
+        <div>
+            Sort by:
+            <select class="sort-by" onchange="onSetSortBy()">
+                <option value="">Select Sorting</option>
+                <option value="title">By Title</option>
+                <option value="price">Price</option>
+            </select>
+            <label>
+                Descending
+                <input class="sort-desc" type="checkbox" oninput="onSetSortBy()" />
+            </label>
+        </div>
+    </section>
+    <div class="btn">
+        <button title="Add Book" onclick="onAddBook()">Add Book</button>
+        <button onclick="onPrevPage()">Prev Page</button>
+        <button onclick="onNextPage()">Next Page</button>
+
+    </div>
+    <!-- added buttons -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li onclick="onPrevPage()" class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li onclick="onNextPage()" class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
+
+    <section class="books-container"></section>
+    <div class="modal bg-secondary">
+        <h3 class="bg-dark"></h3>
+        <h4>Book Price<span class="bg-dark"></span> </h4>
+        <h5>⭐ Rating</h5>
+        <div class="rating"> </div>
+        <h5>Book Description</h5>
+        <p></p>
+        <button onclick="onCloseModal()">Close</button>
+
+    </div>
+    <div class="modalAddBook bg-secondary">
+        <form action="">
+        <h3 > Add Book</h3>
+        <label for="titleInput">Book Title <input id="titleInput" type="text"  placeholder="Add Book Title">  </label>
+        <br><br>
+        <label for="priceInput">Book Price <input id="priceInput" type="number"  placeholder="Add Book Price">  </label>
+        <p></p>
+        <h3></h3>
+        <button onclick="onCloseAddModal()">Exit</button>
+        <button  onclick="onSubmitAddModal()">Submit</button>
+    </form>
+    </div>
+    <div>
+        <table class= "table table-hover table-light" id="myTable" border="1" cellpadding="10">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            <tbody class="board"></tbody>
+
+        </table>
+    </div>
+    <div class="user-msg"></div>
+
+    <footer>
+        <li><a href="https://www.linkedin.com/in/saar-fridman/" target="_blank">Linkendin</a></li>
+        <li><a href="mailto:saarf77@gmail.com" target="_blank">saarf77@gmail.com</a></li>
+        <li><a href="https://github.com/saarf77" target="_blank">GitHub</a></li>
+    </footer>
+
+    <script src="js/services/util-service.js"></script>
+    <script src="js/services/storage-service.js"></script>
+    <script src="js/services/book-service.js"></script>
+    <script src="js/book-controller.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

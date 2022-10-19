@@ -117,23 +117,6 @@ button:hover {
     transition: ease-in;
 }
 
-.modalAddBook{
-    background-color: #118ab2ff;
-    padding: 10px;
-    position: absolute;
-    top: 0px;
-    height: 80vh;
-    min-width: 300px;
-    text-align: center;
-    display: none;  
-}
-
-.modalAddBook.open{
-    color: aliceblue;
-    display: block;
-    transition: ease-in;  
-}
-
 .modal h3 {
     color: #06d6a0ff;
     text-decoration: overline;
@@ -146,6 +129,69 @@ button:hover {
 
 .modal>p {
     text-align: left;
+}
+.modalAddBook{
+    background-color: #118ab2ff;
+    padding: 10px;
+    position: absolute;
+    top: 0px;
+    height: 80vh;
+    min-width: 300px;
+    text-align: center;
+    display: none;
+}
+.modalAddBook.open{
+    color: aliceblue;
+    display: block;
+    transition: ease-in;
+}
+.modalUpdateBook{
+    background-color: #118ab2ff;
+    padding: 10px;
+    position: absolute;
+    top: 0px;
+    height: 80vh;
+    min-width: 300px;
+    text-align: center;
+    display: none;
+}
+.modalUpdateBook.open{
+    color: aliceblue;
+    display: block;
+    transition: ease-in;
+}
+
+.booksContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+.book-preview {
+    background-color: white;
+    color: darkviolet;
+    width: 20%;
+    margin:.5em;
+    border: 1px solid lightgray;
+    border-radius: .2em;
+    text-align: center;
+    padding: 5px;
+}
+.book-preview .btn-remove {
+    float:right;
+}
+
+.book-preview img {
+    max-width: 100%;
+}
+
+.book-preview h5 {
+    font-size: 1.4em;
+    text-transform: capitalize;
+    text-decoration: overline;
+}
+
+.book-preview h6 span{
+    color: tomato;
+    font-size: 2em;
 }
 
 .user-msg {
